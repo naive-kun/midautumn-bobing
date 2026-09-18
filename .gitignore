@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+artifacts/
+*.log
+.DS_Store
+*.blend1
+# Local collaboration records are not part of the published game.
+AGENTS.md
+MEMORY_INDEX.md
+NEXT_TASKS.md
+PROJECT_CONTEXT.md
+PROGRESS.md
+DECISIONS.md

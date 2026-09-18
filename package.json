@@ -1,0 +1,28 @@
+{
+  "name": "midautumn-bobing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "server": "node --env-file-if-exists=.env server/index.js",
+    "web": "vite --host 0.0.0.0",
+    "build": "vite build && node scripts/build-minigame.js",
+    "build:pages": "node scripts/build-pages.js",
+    "preview:pages": "vite preview --host 127.0.0.1 --port 5181 --strictPort",
+    "test": "node --test test/*.test.js",
+    "test:physics": "node --test test/physics.test.js",
+    "verify:multiplayer": "node scripts/verify-multiplayer.js",
+    "preview:minigame": "node scripts/preview-minigame.js"
+  },
+  "dependencies": {
+    "ammojs-typed": "1.0.6",
+    "mysql2": "3.24.4",
+    "three": "0.160.1",
+    "ws": "8.21.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "vite": "8.3.0"
+  }
+}

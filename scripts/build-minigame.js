@@ -1,0 +1,15 @@
+import { build } from 'esbuild';
+import { mkdir, writeFile, cp } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+if (existsSync('.env')) process.loadEnvFile('.env');
+const outdir = 'dist/douyin';
+await mkdir(outdir, { recursive: true });
+const serverURL = process.env.MINIGAME_SERVER_URL || 'ws://127.0.0.1:8796/ws';
+if (!/^wss?:\/\//.test(serverURL)) throw new Error('MINIGAME_SERVER_URL must start with ws:// or wss://');
+const config = { serverURL };
+await build({ entryPoints: ['minigame/game.js'], outfile: `${outdir}/game.js`, bundle: true, minify: true, format: 'iife', target: 'es2020', platform: 'browser', define: { __BOBING_CONFIG__: JSON.stringify(config) }, legalComments: 'eof' });
+await cp('public/models', `${outdir}/models`, { recursive: true });
+await cp('public/audio', `${outdir}/audio`, { recursive: true });
+await writeFile(`${outdir}/game.json`, JSON.stringify({ deviceOrientation: 'portrait', showStatusBar: false, networkTimeout: { request: 10000, connectSocket: 12000 } }, null, 2));
+await writeFile(`${outdir}/project.config.json`, JSON.stringify({ appid: process.env.DOUYIN_APP_ID || '', projectname: '月满博饼', compileType: 'game', setting: { es6: false, minified: true, urlCheck: !!process.env.MINIGAME_SERVER_URL } }, null, 2));
+console.log(`Douyin package: ${outdir}; ${process.env.MINIGAME_SERVER_URL ? 'configured server' : 'LOCAL DEV ONLY (127.0.0.1)'}; ${process.env.DOUYIN_APP_ID ? 'AppID configured' : 'AppID required for device preview/release'}`);
