@@ -9,6 +9,7 @@
     "web": "vite --host 0.0.0.0",
     "build": "vite build && node scripts/build-minigame.js",
     "build:pages": "node scripts/build-pages.js",
+    "verify:pages": "node --experimental-vm-modules scripts/verify-pages-worker.js",
     "preview:pages": "vite preview --host 127.0.0.1 --port 5181 --strictPort",
     "test": "node --test test/*.test.js",
     "test:physics": "node --test test/physics.test.js",

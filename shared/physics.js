@@ -18,7 +18,8 @@ export const PHYSICS_CONFIG = Object.freeze({
 });
 
 let ammoPromise;
-function getAmmo() { return ammoPromise ??= AmmoFactory(); }
+// This legacy Ammo factory assigns this.Ammo; module workers run in strict mode.
+function getAmmo() { return ammoPromise ??= AmmoFactory.call(globalThis); }
 
 function randomGenerator(seed) {
   let state = seed >>> 0;

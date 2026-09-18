@@ -28,6 +28,7 @@ jobs:
       - run: npm run build:pages
         env:
           VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}/
+      - run: npm run verify:pages
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist/web
