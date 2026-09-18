@@ -203,3 +203,82 @@ dialog::backdrop { background: #1e342860; backdrop-filter: blur(5px); }
 @media (max-width: 820px) { .site-header { height: 80px; margin: 0 5%; } .page { padding: 0 5%; } .brand { font-size: 20px; } .brand-mark { width: 39px; height: 39px; } .brand small { font-size: 8px; letter-spacing: 2px; } .header-actions { gap: 12px; } .page-intro { padding: 29px 0 26px; } h1 { font-size: 29px; } .game-layout { grid-template-columns: 235px minmax(0,1fr); gap: 17px; } .right-column { grid-column: 1/-1; display: grid; grid-template-columns: 1fr 1fr; gap: 17px; align-items: start; } .fair-note { grid-column: 1/-1; justify-content: center; } .gather-note { display: none; } .scene-wrap { height: 340px; } .stage-topline { padding: 19px 17px 0; } .stage-material { display: none; } .play-zone { padding: 18px 17px 18px; } .play-copy h2 { font-size: 19px; } .play-copy p { font-size: 10px; } .throw-button { font-size: 17px; } .scene-caption { font-size: 10px; letter-spacing: 1px; } .page-footer { margin-top: 25px; } .history-list { max-height: 355px; } }
 @media (max-width: 620px) { .site-header { height: 73px; margin: 0 20px; } .page { padding: 0 16px; } .brand { font-size: 20px; gap: 9px; } .brand-mark { width: 33px; height: 33px; border-radius: 9px; } .brand-mark svg { width: 25px; height: 25px; } .brand small { font-size: 7px; letter-spacing: 1.4px; margin-top: 3px; } .header-actions { gap: 5px; } .connection { font-size: 0; gap: 0; margin-right: 4px; } .text-button { font-size: 10px; } .text-button span { display: none; } .icon-button { width: 32px; height: 32px; } .icon-button svg { width: 19px; height: 19px; } .page-intro { padding: 27px 4px 24px; } .eyebrow { font-size: 7px; letter-spacing: 1.7px; margin-bottom: 12px; } h1 { font-size: clamp(24px,6.6vw,31px); letter-spacing: 0; white-space: nowrap; } .intro-description { font-size: 10px; margin-top: 10px; letter-spacing: .4px; } .festival-seal { display: none; } .game-layout { display: flex; flex-direction: column; gap: 17px; } .left-column, .right-column, .stage-panel { width: 100%; } .stage-panel { order: 0; } .left-column { order: 1; } .right-column { order: 2; grid-template-columns: 1fr; } .panel { border-radius: 12px; padding: 21px; } .panel-heading h2 { font-size: 15px; } .lobby-panel { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; } .lobby-panel .panel-heading, .lobby-panel .panel-description, .lobby-panel .divider, .lobby-panel .small-note { grid-column: 1/-1; } .lobby-panel .panel-description { margin-bottom: 19px; } .lobby-panel > .field-label { grid-column: 1/-1; } #nickname { grid-column: 1/-1; } .field-row { margin: 12px 0 0; align-items: center; } #create-button { margin-top: 12px; } .lobby-panel .divider { margin: 21px 0 16px; } .join-row { grid-column: 1/-1; } .join-row .button { width: 80px; } .join-row input { letter-spacing: 9px; } .small-note { margin-top: 14px; } .scene-wrap { height: 305px; } .stage-topline { padding: 18px 18px 0; font-size: 9px; } .stage-material { display: block; font-size: 8px; } .moon-circle { width: 240px; height: 240px; top: 15px; } .stage-watermark { font-size: 40px; top: 47px; right: 22px; } .scene-caption { font-size: 9px; letter-spacing: 1.2px; bottom: 1px; } .play-zone { padding: 16px 26px 17px; } .turn-eyebrow { font-size: 8px; } .play-copy h2 { font-size: 21px; margin-top: 9px; } .play-copy p { font-size: 10px; margin-bottom: 16px; } .throw-button { height: 50px; font-size: 18px; } .round-info { margin-top: 13px; font-size: 8px; } .room-code-line { margin-top: 16px; } .seats { grid-template-columns: repeat(6,1fr); gap: 9px 2px; margin-left: -9px; margin-right: -9px; } .seat-avatar { width: 30px; height: 30px; } .seat-name { font-size: 9px; } .seat-meta { font-size: 7px; } .room-panel:has(+*) { width: 100%; } .room-action-note { margin-top: 12px; } .room-panel > .button { min-height: 41px; } .award-highlight { margin-top: 19px; } .award-mini-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 22px; } .award-mini-list > div { gap: 8px; } .award-mini-list span { font-size: 8px; } .award-mini-list b { font-size: 11px; } .award-mini-list em { font-size: 9px; } .empty-state { padding: 24px 0 15px; } .history-list { max-height: 280px; } .page-footer { flex-direction: column; align-items: center; gap: 11px; padding-top: 21px; } .dev-note { font-size: 8px; } .round-award-row { grid-template-columns: 30px minmax(0,1fr) auto; padding: 12px 0; } .award-status { font-size: 11px; } dialog { padding: 23px; } .dialog-heading h2 { font-size: 21px; } .rules-table > div { grid-template-columns: 98px 1fr; gap: 7px; font-size: 9px; } }
 @media (prefers-reduced-motion: reduce) { *, *:before, *:after { scroll-behavior: auto !important; } .throw-button.rolling svg { animation: none; } }
+
+/* Educational guides share the table's porcelain, pine and vermilion palette. */
+.culture-entry { display: flex; align-items: center; gap: 14px; width: 100%; min-width: 0; padding: 19px 17px; text-align: left; border: 1px solid #dcdcc9; border-radius: 12px; background: linear-gradient(120deg,#edf0e5,#f8f5eb); color: var(--green); }
+.culture-entry:hover { border-color: #b7bb9f; background: #edf0e4; }
+.culture-entry-mark { width: 36px; height: 47px; flex: 0 0 36px; display: grid; place-items: center; border: 1px solid #bba47980; border-radius: 18px 18px 4px 4px; color: #a78b54; }
+.culture-entry-mark svg { width: 22px; height: 22px; }
+.culture-entry > span:nth-child(2) { min-width: 0; }
+.culture-entry small { display: block; font-size: 8px; color: #a18551; letter-spacing: 1px; margin-bottom: 5px; }
+.culture-entry strong { display: block; font-family: "Songti SC", SimSun, serif; font-size: 19px; font-weight: 500; letter-spacing: 2px; }
+.culture-entry strong + span { display: block; font-size: 9px; color: #7f8876; margin-top: 5px; }
+.culture-entry-arrow { margin-left: auto; flex-shrink: 0; font-size: 19px; color: #a38b5a; }
+dialog.guide-dialog { width: min(680px,calc(100vw - 28px)); height: min(88vh,850px); height: min(88svh,850px); max-height: none; padding: 0; overflow: hidden; }
+.guide-dialog[open] { display: flex; flex-direction: column; }
+.guide-dialog .dialog-heading { padding: 24px 27px 18px; flex: 0 0 auto; border-bottom: 1px solid #e2dfcf; background: #f8f6ed; }
+.guide-dialog .dialog-heading h2 { font-size: 24px; line-height: 1.4; }
+.guide-dialog .dialog-heading .eyebrow { font-size: 8px; margin-bottom: 9px; letter-spacing: 1.7px; }
+.guide-dialog .dialog-heading .icon-button { width: 40px; height: 40px; margin: -5px -7px 0 0; }
+.guide-edition { font-size: 10px; color: #9b8258; margin: 7px 0 0; line-height: 1.7; }
+.guide-scroll { padding: 0 27px; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #c6cbb6 transparent; }
+.guide-dialog .rules-intro { color: #73806b; font-size: 12px; margin: 18px 0; }
+.dice-legend { display: flex; flex-wrap: wrap; gap: 10px 19px; padding: 14px 16px; border-radius: 8px; background: #eeeede; margin-bottom: 19px; }
+.dice-legend > span { display: flex; align-items: center; gap: 7px; font-size: 10px; color: #68765e; }
+.dice-legend i { width: 17px; height: 17px; display: inline-block; border: 1.5px solid #ac9b76; border-radius: 4px; background: #fffaf0; }
+.dice-legend i.variable-key { border-style: dashed; }
+.dice-legend p { width: 100%; font-size: 10px; line-height: 1.8; color: #818875; margin: 0; }
+.guide-dialog .rules-table { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.rule-card { min-width: 0; border: 1px solid #e2ddcb; background: #fffdf7a1; border-radius: 10px; padding: 16px 13px 14px; }
+.rule-card:first-child { border-color: #c6aa6e; background: #f6efda80; }
+.rule-card-heading h3 { font-family: "Songti SC", SimSun, serif; font-size: 19px; line-height: 1.4; font-weight: 600; margin: 0 0 5px; color: var(--green); }
+.rule-card:first-child h3 { color: #a34332; }
+.rule-card-heading > span { display: block; font-size: 10px; line-height: 1.65; color: #8a8b73; }
+.rule-dice-row { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); align-items: center; gap: 3px; margin: 14px 0 10px; max-width: 310px; }
+.rule-dice-row .guide-die { display: block; width: 100%; height: auto; max-width: 48px; }
+.rule-condition { font-size: 11px; line-height: 1.85; color: #75816d; margin: 0; }
+.guide-dialog .rules-fineprint { padding: 19px 0 3px; margin: 22px 0; }
+.guide-dialog .rules-fineprint b { font-size: 12px; }
+.guide-dialog .rules-fineprint p { font-size: 11px; }
+.guide-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid #e2dfcf; padding: 14px 27px; flex: 0 0 auto; background: #f8f6ed; }
+.guide-footer .button { min-height: 42px; padding: 11px 18px; font-size: 12px; }
+.guide-switch { background: none; border: 0; color: #977a43; font-size: 11px; line-height: 1.7; min-height: 42px; padding: 4px 0; text-align: left; }
+.guide-switch:hover { color: var(--green); }
+.guide-switch span { margin-left: 5px; }
+.story-introduction { font-family: "Songti SC", SimSun, serif; font-size: 16px; line-height: 1.95; color: #718166; margin: 22px 0; padding: 0 0 20px; border-bottom: 1px solid var(--line); }
+.story-chapter { display: grid; grid-template-columns: 29px minmax(0,1fr); gap: 12px; margin-bottom: 25px; }
+.story-chapter-number { color: #b59a68; font-family: Georgia,serif; font-size: 20px; line-height: 1.5; border-top: 1px solid #c4ad80; padding-top: 4px; margin-top: 3px; }
+.story-chapter h3 { color: var(--green); font-family: "Songti SC",SimSun,serif; font-weight: 600; font-size: 21px; margin: 0 0 11px; line-height: 1.6; }
+.story-chapter p { font-size: 13px; line-height: 1.95; color: #74806d; margin: 0 0 10px; }
+.story-inline-sources { display: flex; flex-wrap: wrap; gap: 2px 15px; margin-top: 10px; }
+.story-inline-sources a { color: #9b8050; font-size: 10px; line-height: 1.9; text-decoration-thickness: 1px; text-underline-offset: 3px; padding: 5px 0; }
+.story-inline-sources a:hover { color: var(--green); }
+.story-note { font-size: 10px; line-height: 1.85; color: #929680; border-top: 1px solid var(--line); padding-top: 15px; margin: 0 0 22px; }
+@media (max-width: 580px) {
+  .guide-dialog .dialog-heading { padding: 20px 18px 15px; }
+  .guide-dialog .dialog-heading h2 { font-size: 21px; }
+  .guide-dialog .dialog-heading .eyebrow { font-size: 7px; letter-spacing: 1.3px; }
+  .guide-dialog .dialog-heading .icon-button { margin-right: -7px; }
+  .guide-scroll { padding: 0 18px; }
+  .guide-dialog .rules-table { grid-template-columns: minmax(0,1fr); }
+  .rule-card { padding: 16px; }
+  .rule-card-heading h3 { font-size: 20px; }
+  .rule-card-heading > span { font-size: 11px; }
+  .rule-dice-row { gap: 5px; }
+  .rule-condition { font-size: 12px; }
+  .guide-footer { padding: 12px 18px; gap: 10px; }
+  .guide-footer .button { padding: 10px 13px; font-size: 11px; }
+  .guide-switch { font-size: 10px; }
+  .story-introduction { font-size: 15px; }
+  .story-chapter { grid-template-columns: 23px minmax(0,1fr); gap: 10px; }
+  .story-chapter-number { font-size: 18px; }
+  .story-chapter h3 { font-size: 19px; }
+}
+@media (max-width: 360px) {
+  .guide-dialog .dialog-heading h2 { font-size: 18px; }
+  .guide-edition { font-size: 9px; }
+  .guide-scroll { padding: 0 14px; }
+  .rule-card { padding: 13px 10px; }
+  .rule-dice-row { gap: 3px; }
+  .guide-footer { padding-left: 14px; padding-right: 14px; }
+}

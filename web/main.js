@@ -2,7 +2,7 @@ import './style.css';
 import { RoomClient } from '../shared/client.js';
 import { createScene } from './scene.js';
 import { COLLISION_SAMPLES, impactVolume } from '../shared/audio.js';
-import { AWARDS } from '../shared/rules.js';
+import { CULTURE_STORY, renderRulesGuide, renderCultureStory } from './rules-guide.js';
 import { assetUrl, resolveRoomServer } from './runtime-config.js';
 import { SoloClient } from './solo-client.js';
 
@@ -42,6 +42,7 @@ document.querySelector('#app').innerHTML = `
           <p class="small-note" id="lobby-note">${isSolo ? '本次试玩仅你一人，无需创建联机房间。' : '一个人也能先开桌，试试手气。'}</p>
         </section>
         <section class="panel room-panel hidden" id="room-panel"><div class="panel-heading"><span class="section-icon">${icons.people}</span><h2>${isSolo ? '本次试玩' : '团圆房间'}</h2><button class="quiet-button" id="leave-button">${isSolo ? '结束试玩' : '离开'}</button></div><div class="room-code-line ${isSolo ? 'hidden' : ''}"><div><span class="field-label">邀请好友 · 房间码</span><strong id="room-code">------</strong></div><button class="icon-button" id="copy-button" aria-label="复制房间码" title="复制房间码">${icons.copy}</button></div><div class="seats-heading ${isSolo ? 'hidden' : ''}"><span>入席 <b id="player-count">0</b> / 12</span><span id="room-phase">等候开桌</span></div><div id="seats" class="seats ${isSolo ? 'hidden' : ''}"></div><div id="room-action-note" class="room-action-note"></div><button id="ready-button" class="button button-outline wide">准备好了</button><button id="start-button" class="button button-primary wide hidden">全员就绪，开桌 ${icons.arrow}</button></section>
+        <button id="story-button" class="culture-entry" aria-haspopup="dialog"><span class="culture-entry-mark" aria-hidden="true">${icons.moon}</span><span><small>一碗骰声里的中秋</small><strong>博饼故事</strong><span>点开读读这份团圆习俗</span></span><span class="culture-entry-arrow" aria-hidden="true">↗</span></button>
         <div class="gather-note"><span>${icons.moon}</span><p>${isSolo ? '举杯邀明月，<br/>博个好彩头。' : '不论相隔多远，<br/>今夜，共享一碗月光。'}</p><div class="note-line"></div></div>
       </aside>
       <section class="stage-panel" aria-label="三维博饼桌">
@@ -57,11 +58,24 @@ document.querySelector('#app').innerHTML = `
     <footer class="page-footer"><span>花好月圆，掷得团圆。</span><span class="dev-note">${isSolo ? '单人试玩 · 本页暂存，刷新后清空' : `${import.meta.env.PROD ? '联机体验版' : '本地体验版'} · 临时房间，服务重启后清空`}</span></footer>
   </main>
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-  <dialog id="rules-dialog"><div class="dialog-heading"><div><p class="eyebrow">THE ART OF BOBING</p><h2>六骰落碗，讨个好彩头。</h2></div><button class="icon-button close-dialog" aria-label="关闭规则">×</button></div><p class="rules-intro">${isSolo ? '每次投掷六颗骰子' : '每人轮流投掷六颗骰子'}，全部停稳后读取朝上的点数。每轮直接记录博得的奖项，同时命中多个组合时只取最高奖项。奖项仅供娱乐，不对应现金或实物。</p><div class="rules-table" id="rules-table"></div><div class="rules-fineprint"><b>同桌须知</b><p>${isSolo ? '当前为单人试玩。选择轮数后即可开始，点“博一下”投掷骰子，右侧按轮保存本次试玩的奖项。' : '每房最多 12 人，单人也能体验。所有在线玩家准备后由房主开桌，依次投掷。右侧按轮记录每个人博得的奖项，结束后可切换轮次回看。'}</p><p>斜立、出碗或未停稳会判定为无效投掷，最多尝试三次，仍无效则跳过本轮；${isSolo ? '每次投掷在本机执行物理计算，全部停稳后揭晓，不预设点数。' : '等待投掷超时也会跳过，并保留记录。点数、轮次与判奖均由服务器统一计算。'}</p><p>${isSolo ? '试玩记录只在当前页面暂存，刷新页面或结束试玩后清空。' : '临时断线会保留席位；返回当前浏览器标签页可尝试重连。服务重启后，临时房间和记录清空。'}</p></div><button class="button button-primary wide close-dialog">知道了，博个好运</button></dialog>
+  <dialog id="rules-dialog" class="guide-dialog" aria-labelledby="rules-title">
+    <div class="dialog-heading"><div><p class="eyebrow">THE ART OF BOBING</p><h2 id="rules-title">骰子图解 · 一眼识好彩</h2><p class="guide-edition">本游戏娱乐版，各地习俗可能不同</p></div><button class="icon-button close-dialog" aria-label="关闭规则" autofocus>×</button></div>
+    <div class="guide-scroll">
+      <p class="rules-intro">${isSolo ? '每次投掷六颗骰子' : '每人轮流投掷六颗骰子'}，全部停稳后读取朝上的点数。下面按奖项从高到低排列，同时命中多个组合时只取最高。奖项仅供娱乐，不对应现金或实物。</p>
+      <div class="dice-legend"><span><i aria-hidden="true"></i>构成奖项的组合</span><span><i class="variable-key" aria-hidden="true"></i>可变化的示例位</span><p>每张图都是能命中该奖项的一组六骰。虚线骰可以变化，但必须遵守卡片下的条件；不是任意点数都可以。</p></div>
+      <div class="rules-table" id="rules-table">${renderRulesGuide()}</div>
+      <div class="rules-fineprint"><b>${isSolo ? '试玩须知' : '同桌须知'}</b><p>${isSolo ? '当前为单人试玩。选择轮数后即可开始，点“博一下”投掷骰子，右侧按轮保存本次试玩的奖项。' : '每房最多 12 人，单人也能体验。所有在线玩家准备后由房主开桌，依次投掷。右侧按轮记录每个人博得的奖项，结束后可切换轮次回看。'}</p><p>斜立、出碗或未停稳会判定为无效投掷，最多尝试三次，仍无效则跳过本轮；${isSolo ? '每次投掷在本机执行物理计算，全部停稳后揭晓，不预设点数。' : '等待投掷超时也会跳过，并保留记录。点数、轮次与判奖均由服务器统一计算。'}</p><p>${isSolo ? '试玩记录只在当前页面暂存，刷新页面或结束试玩后清空。' : '临时断线会保留席位；返回当前浏览器标签页可尝试重连。服务重启后，临时房间和记录清空。'}</p></div>
+    </div>
+    <div class="guide-footer"><button id="rules-story-button" class="guide-switch">读读博饼故事 <span aria-hidden="true">↗</span></button><button class="button button-primary close-dialog">知道了，博个好运</button></div>
+  </dialog>
+  <dialog id="story-dialog" class="guide-dialog story-dialog" aria-labelledby="story-title">
+    <div class="dialog-heading"><div><p class="eyebrow">A MID-AUTUMN TRADITION</p><h2 id="story-title">${escape(CULTURE_STORY.title)}</h2><p class="guide-edition">从一场游戏，读到一份乡情</p></div><button class="icon-button close-dialog" aria-label="关闭博饼故事" autofocus>×</button></div>
+    <div class="guide-scroll story-body">${renderCultureStory()}</div>
+    <div class="guide-footer"><button id="story-rules-button" class="guide-switch">看骰子图解 <span aria-hidden="true">↗</span></button><button class="button button-primary close-dialog">回去博个好运</button></div>
+  </dialog>
 `;
 
 const $ = id => document.getElementById(id);
-$('rules-table').innerHTML = [...AWARDS].reverse().map(({name, description}) => `<div><b>${name}</b><span>${description}</span></div>`).join('');
 const nicknameKey = 'bobing.nickname';
 try { $('nickname').value = localStorage.getItem(nicknameKey) || ''; } catch {}
 const client = isSolo ? new SoloClient() : roomServer.url ? new RoomClient({ url: roomServer.url }) : null;
@@ -192,9 +206,15 @@ $('sound-button').addEventListener('click', () => {
   $('sound-button').title = muted ? '开启碰撞音效' : '关闭碰撞音效';
   $('sound-button').classList.toggle('muted', muted);
 });
-for (const id of ['rules-button', 'detail-rules-button']) $(id).addEventListener('click', () => $('rules-dialog').showModal());
-document.querySelectorAll('.close-dialog').forEach(button => button.addEventListener('click', () => $('rules-dialog').close()));
-$('rules-dialog').addEventListener('click', e => { if (e.target === $('rules-dialog')) { const box = e.target.getBoundingClientRect(); if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) e.target.close(); } });
+function openGuide(id) {
+  for (const dialogId of ['rules-dialog', 'story-dialog']) if ($(dialogId).open) $(dialogId).close();
+  $(id).querySelector('.guide-scroll').scrollTop = 0;
+  $(id).showModal();
+}
+for (const id of ['rules-button', 'detail-rules-button', 'story-rules-button']) $(id).addEventListener('click', () => openGuide('rules-dialog'));
+for (const id of ['story-button', 'rules-story-button']) $(id).addEventListener('click', () => openGuide('story-dialog'));
+document.querySelectorAll('.close-dialog').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
+for (const id of ['rules-dialog', 'story-dialog']) $(id).addEventListener('click', e => { if (e.target === $(id)) { const box = e.target.getBoundingClientRect(); if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) e.target.close(); } });
 
 client?.on('connection', () => {
   const connected = clientState.connected;
